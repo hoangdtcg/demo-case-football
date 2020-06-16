@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/team.js"></script>
+    <script src="js/league.js"></script>
+</head>
+<style>
+    form {
+        width: 400px;
+        margin-left: 20px;
+        display: inline-block;
+    }
+
+    input {
+        margin-bottom: 10px;
+    }
+
+    #logo {
+        padding: 5px;
+        width: 100px;
+    }
+
+    td {
+        vertical-align: middle !important;
+        text-align: center;
+    }
+    .align-left{
+        text-align: left;
+    }
+</style>
+<body>
+<div class="container">
+    <form id="form-add" class="form-group">
+        <fieldset>
+            <legend>ADD TEAM</legend>
+            <input class="form-control" id="team-name" placeholder="Team Name">
+            <input class="form-control" id="team-logo" placeholder="Team Logo">
+            <button type="button" class="btn btn-success" onclick="addTeam()">Add</button>
+        </fieldset>
+    </form>
+</div>
+<div class="container">
+    <h2>Premier League</h2>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#table-league">Table</a></li>
+        <li><a data-toggle="tab" href="#matches">Matches</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="table-league" class="tab-pane fade in active">
+            <h3>HOME</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua.</p>
+        </div>
+        <div id="matches" class="tab-pane fade">
+            <h3>Menu 1</h3>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat.</p>
+        </div>
+    </div>
+</div>
+<script>
+    let league = new League(NUMBER_TEAMS);
+    league.init();
+    display();
+
+    function addTeam() {
+        let name = document.getElementById("team-name").value;
+        let logo = document.getElementById("team-logo").value;
+
+        let team = new Team(name);
+        if (logo !== '')
+            team.logo = logo;
+
+        league.addTeam(team);
+        display();
+        document.getElementById('form-add').reset();
+    }
+
+    function display() {
+        document.getElementById('table-league').innerHTML = league.getHtml();
+        Data.saveData(league.teams,TEAMS);
+    }
+
+    // $("button").click(function () {
+    //     let data = $("#form-add").serializeArray();
+    //     console.log("test");
+    // });
+</script>
+</body>
+</html>
